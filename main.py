@@ -12,7 +12,7 @@ def homepage():
 #criar rota(caminho da pagina)da pagina perfil
 @app.route("/perfil")
 def perfil():
-    return "Perfil do Usuário"
+    return render_template("perfil.html")
 
 
 
