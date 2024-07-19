@@ -1,12 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Perfil - FakePinterest</title>
-</head>
-<body>
-     <h1>Perfil do Usuário: {{usuario}}</h1>
+<!--importa estrutura html da homepage-->
+{% extends "homepage.html" %}
 
-     <a href="{{ url_for('homepage') }}">Sair</a><!--direciona para a homepage-->
-</body>
-</html>
+{% block titulo %}
+ Perfil - {{ usuario }}
+{% endblock %}
+
+
+{% block body %}
+   <body>
+        <h1>Perfil do usuario: {{ usuario }} </h1>
+        <p>Usuario........</p>
+
+         <a href=" {{ url_for('homepage') }}">Sair</a><!--direciona para o pefil-->
+   </body>
+
+{% endblock %}

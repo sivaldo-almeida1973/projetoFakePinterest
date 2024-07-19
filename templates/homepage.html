@@ -2,12 +2,21 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>fake Pinterest</title>
-</head>
-<body>
-     <h1>fakePinterest - Meu primeiro site no ar</h1>
-     <p>Ogora vamos continuar........</p>
+    <title>
+        {% block titulo %}
+          fakePinterest
+        {% endblock %}
 
-      <a href="/perfil/sivaldo">Sair</a><!--direciona para o pefil-->
-</body>
+    </title>
+</head>
+
+        {% block body %}
+        <body>
+             <h1>fakePinterest - Meu primeiro site no ar</h1>
+             <p>Ogora vamos continuar........</p>
+
+              <a href="/perfil/sivaldo">Sair</a><!--direciona para o pefil-->
+        </body>
+
+        {% endblock %}
 </html>
