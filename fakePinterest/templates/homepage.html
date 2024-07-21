@@ -13,9 +13,27 @@
         {% block body %}
         <body>
              <h1>fakePinterest - Meu primeiro site no ar</h1>
-             <p>Ogora vamos continuar........</p>
+             <h3>Agora vamos continuar nosso site........</h3>
 
-              <a href="/perfil/sivaldo">Sair</a><!--direciona para o pefil-->
+             <a href="/perfil/sivaldo">Sair</a><!--direciona para o pefil-->
+
+                {% block formulario %}
+
+                 <form method="POST"> <!--enviar inf-->
+
+                     {{ form.csrf_token }}  <!--chave segurança-->
+
+                     {{ form.email.label() }}   <!-- titulo do campo-->
+                     {{ form.email() }}  <!-- campo digitar-->
+
+                     {{ form.senha.label() }}   <!-- titulo do campo-->
+                     {{ form.senha() }}  <!-- campo digitar-->
+
+                     {{ form.botao_confirmacao() }}
+
+                 </form>
+                 {% endblock %}
+
         </body>
 
         {% endblock %}

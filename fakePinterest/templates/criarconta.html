@@ -1,0 +1,30 @@
+{% extends "homepage.html" %}
+
+{% block titulo %}
+ CriarConta -  fakePinterest
+{% endblock %}
+
+
+{% block formulario %}
+
+     <form method="post"> <!--enviar inf-->
+
+         {{ form.csrf_token }}  <!--chave segurança-->
+
+         {{ form.email.label() }}   <!-- titulo do campo-->
+         {{ form.email() }}  <!-- campo digitar-->
+
+         {{ form.username.label() }}  <!--titulo campo-->
+         {{ form.username() }}        <!-- campo digitar-->
+
+         {{ form.senha.label() }}   <!--titulo campo-->
+         {{ form.senha() }}  <!-- campo digitar-->
+
+
+         {{ form.confirmacao_senha.label() }}
+         {{ form.confirmacao_senha() }}
+
+         {{ form.botao_confirmacao() }}
+
+     </form>
+{% endblock %}
