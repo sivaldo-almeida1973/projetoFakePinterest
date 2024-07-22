@@ -1,30 +1,38 @@
 {% extends "homepage.html" %}
+<!-- Este template estende o template "homepage.html" -->
 
 {% block titulo %}
  CriarConta -  fakePinterest
 {% endblock %}
-
+<!-- Bloco de título que define o título da página como "CriarConta - fakePinterest" -->
 
 {% block formulario %}
+<!-- Bloco de formulário que pode ser substituído em templates filhos -->
 
-     <form method="post"> <!--enviar inf-->
+     <form method="post">
+         <!-- Formulário que envia dados via método POST -->
 
-         {{ form.csrf_token }}  <!--chave segurança-->
+         {{ form.csrf_token }}
+         <!-- Token CSRF para segurança do formulário -->
 
-         {{ form.email.label() }}   <!-- titulo do campo-->
-         {{ form.email() }}  <!-- campo digitar-->
+         {{ form.email.label() }}
+         {{ form.email() }}
+         <!-- Campo de entrada para o email com seu rótulo -->
 
-         {{ form.username.label() }}  <!--titulo campo-->
-         {{ form.username() }}        <!-- campo digitar-->
+         {{ form.username.label() }}
+         {{ form.username() }}
+         <!-- Campo de entrada para o nome de usuário com seu rótulo -->
 
-         {{ form.senha.label() }}   <!--titulo campo-->
-         {{ form.senha() }}  <!-- campo digitar-->
-
+         {{ form.senha.label() }}
+         {{ form.senha() }}
+         <!-- Campo de entrada para a senha com seu rótulo -->
 
          {{ form.confirmacao_senha.label() }}
          {{ form.confirmacao_senha() }}
+         <!-- Campo de entrada para a confirmação da senha com seu rótulo -->
 
          {{ form.botao_confirmacao() }}
-
+         <!-- Botão de confirmação do formulário -->
      </form>
 {% endblock %}
+<!-- Fim do bloco de formulário -->

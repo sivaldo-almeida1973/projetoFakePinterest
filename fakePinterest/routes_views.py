@@ -1,23 +1,68 @@
-#criar rotas do nosso site(links)
+# Importa as funções necessárias do Flask
 from flask import render_template, url_for, redirect
-#import o app que esta dentro do __init__ para poder funcionar
-from fakePinterest import app
-from flask_login import login_required
+# Importa o app, o banco de dados e o bcrypt do módulo fakePinterest
+from fakePinterest import app, database, bcrypt
+# Importa os modelos de dados Usuario e Foto
+from fakePinterest.models import Usuario, Foto
+# Importa funções de login do Flask-Login
+from flask_login import login_required, login_user, logout_user, current_user
+# Importa os formulários de login e criação de conta
 from fakePinterest.forms import FormLogin, FormCriarConta
 
-#criar rota(caminho da pagina)da pagina homepage
+# Cria a rota para a página inicial (homepage)
 @app.route("/", methods=["GET", "POST"])
 def homepage():
+    # Instancia o formulário de login
     formlogin = FormLogin()
+    # Verifica se o formulário foi submetido e é válido
+    if formlogin.validate_on_submit():
+        # Busca o usuário no banco de dados pelo email
+        usuario = Usuario.query.filter_by(email=formlogin.email.data).first()
+        # Verifica se o usuário existe e se a senha está correta
+        if usuario and bcrypt.check_password_hash(usuario.senha, formlogin.senha.data):
+            # Faz o login do usuário
+            login_user(usuario)
+            # Redireciona para a página de perfil do usuário
+            return redirect(url_for("perfil", usuario=usuario.username))
+    # Renderiza o template da homepage com o formulário de login
     return render_template("homepage.html", form=formlogin)
 
-@app.route("/criarconta",  methods=["GET", "POST"])
+# Cria a rota para a página de criação de conta
+@app.route("/criarconta", methods=["GET", "POST"])
 def criarconta():
+    # Instancia o formulário de criação de conta
     formcriarconta = FormCriarConta()
+    # Verifica se o formulário foi submetido e é válido
+    if formcriarconta.validate_on_submit():
+        # Criptografa a senha fornecida pelo usuário
+        senha = bcrypt.generate_password_hash(formcriarconta.senha.data)
+        # Cria um novo usuário com os dados fornecidos
+        usuario = Usuario(username=formcriarconta.username.data,
+                          senha=senha,
+                          email=formcriarconta.email.data)
+        # Adiciona o novo usuário ao banco de dados
+        database.session.add(usuario)
+        # Confirma a transação no banco de dados
+        database.session.commit()
+        # Faz o login do novo usuário
+        login_user(usuario, remember=True)
+        # Redireciona para a página de perfil do usuário
+        return redirect(url_for("perfil", usuario=usuario.username))
+    # Renderiza o template de criação de conta com o formulário
     return render_template("criarconta.html", form=formcriarconta)
 
-#criar rota(caminho da pagina) perfil, para qualquer usuario
+# Cria a rota para a página de perfil do usuário
 @app.route("/perfil/<usuario>")
-@login_required  #so permite acesso se estiver logado
+@login_required  # Só permite acesso se o usuário estiver logado
 def perfil(usuario):
+    # Renderiza o template de perfil com o nome do usuário
     return render_template("perfil.html", usuario=usuario)
+
+# Cria a rota para a página de logout
+@app.route("/logout")
+@login_required  # Só permite acesso se o usuário estiver logado
+def logout():
+    # Faz o logout do usuário
+    logout_user()
+    # Redireciona para a página inicial (homepage)
+    return redirect(url_for("homepage"))

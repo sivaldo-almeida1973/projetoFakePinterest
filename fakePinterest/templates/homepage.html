@@ -2,39 +2,47 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <!-- Define o conjunto de caracteres como UTF-8 -->
     <title>
         {% block titulo %}
           fakePinterest
         {% endblock %}
-
+        <!-- Bloco de título que pode ser substituído em templates filhos -->
     </title>
 </head>
 
-        {% block body %}
-        <body>
-             <h1>fakePinterest - Meu primeiro site no ar</h1>
-             <h3>Agora vamos continuar nosso site........</h3>
+{% block body %}
+<body>
+    <!-- Bloco de corpo que pode ser substituído em templates filhos -->
+    <h1>fakePinterest - Meu primeiro site no ar</h1>
+    <!-- Cabeçalho principal do site -->
+    <h3>Agora vamos continuar nosso site........</h3>
+    <!-- Subcabeçalho com uma mensagem adicional -->
 
-             <a href="/perfil/sivaldo">Sair</a><!--direciona para o pefil-->
+    <a href="/perfil/sivaldo">Sair</a>
+    <!-- Link para sair do perfil -->
 
-                {% block formulario %}
+    {% block formulario %}
+    <form method="POST">
+        <!-- Formulário que envia dados via método POST -->
 
-                 <form method="POST"> <!--enviar inf-->
+        {{ form.csrf_token }}
+        <!-- Token CSRF para segurança do formulário -->
 
-                     {{ form.csrf_token }}  <!--chave segurança-->
+        {{ form.email.label() }}
+        {{ form.email() }}
+        <!-- Campo de entrada para o email com seu rótulo -->
 
-                     {{ form.email.label() }}   <!-- titulo do campo-->
-                     {{ form.email() }}  <!-- campo digitar-->
+        {{ form.senha.label() }}
+        {{ form.senha() }}
+        <!-- Campo de entrada para a senha com seu rótulo -->
 
-                     {{ form.senha.label() }}   <!-- titulo do campo-->
-                     {{ form.senha() }}  <!-- campo digitar-->
-
-                     {{ form.botao_confirmacao() }}
-
-                 </form>
-                 {% endblock %}
-
-        </body>
-
-        {% endblock %}
+        {{ form.botao_confirmacao() }}
+        <!-- Botão de confirmação do formulário -->
+    </form>
+    {% endblock %}
+    <!-- Fim do bloco de formulário que pode ser substituído em templates filhos -->
+</body>
+{% endblock %}
+<!-- Fim do bloco de corpo -->
 </html>

@@ -1,17 +1,21 @@
-<!--importa estrutura html da homepage-->
+<!-- Importa a estrutura HTML da homepage -->
 {% extends "homepage.html" %}
 
 {% block titulo %}
  Perfil - {{ usuario }}
 {% endblock %}
-
+<!-- Bloco de título que define o título da página como "Perfil - [nome do usuário]" -->
 
 {% block body %}
    <body>
         <h1>Perfil do usuario: {{ usuario }} </h1>
+        <!-- Cabeçalho principal que exibe o nome do usuário -->
+
         <p>Usuario........</p>
+        <!-- Parágrafo com uma descrição do usuário -->
 
-         <a href=" {{ url_for('homepage') }}">Sair</a><!--direciona para o pefil-->
+         <a href=" {{ url_for('logout') }}">Sair</a>
+         <!-- Link para a função de logout -->
    </body>
-
 {% endblock %}
+<!-- Fim do bloco de corpo -->
