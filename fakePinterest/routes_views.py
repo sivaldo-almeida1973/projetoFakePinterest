@@ -88,3 +88,10 @@ def logout():
     logout_user()
     # Redireciona para a página inicial (homepage)
     return redirect(url_for("homepage"))
+
+
+@app.route("/feed")
+@login_required  #so acessa se estiver logado
+def feed():
+    fotos = Foto.query.order_by(Foto.data_criacao.desc()).all()
+    return render_template("feed.html", fotos=fotos)

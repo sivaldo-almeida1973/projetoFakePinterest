@@ -8,6 +8,8 @@
 
 {% block body %}
    <body>
+    <!-- Importa a navbar no perfil-->
+    {% include "navbar.html" %}
 
       <h1>Perfil do usuario: {{ usuario.username }} </h1>
     <!-- Cabeçalho principal que exibe o nome do usuário -->
@@ -19,13 +21,10 @@
             <!-- Campo para upload de foto -->
             {{ form.foto() }}
             <!-- Botão de confirmação -->
-            {{ form.botao_confirmacao }}
+            {{ form.botao_confirmacao() }}
         </form>
         <!-- Fim do formulário -->
          {% endif %}
-
-         <a href=" {{ url_for('logout') }}">Sair</a>
-         <!-- Link para a função de logout -->
 
          {% for foto in usuario.fotos %}
               <img src="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem)) }}">
