@@ -23,7 +23,7 @@ def homepage():
             # Faz o login do usuário
             login_user(usuario)
             # Redireciona para a página de perfil do usuário
-            return redirect(url_for("perfil", usuario=usuario.username))
+            return redirect(url_for("perfil", id_usuario=usuario.id))
     # Renderiza o template da homepage com o formulário de login
     return render_template("homepage.html", form=formlogin)
 
@@ -47,16 +47,21 @@ def criarconta():
         # Faz o login do novo usuário
         login_user(usuario, remember=True)
         # Redireciona para a página de perfil do usuário
-        return redirect(url_for("perfil", usuario=usuario.username))
+        return redirect(url_for("perfil", id_usuario=usuario.id))
     # Renderiza o template de criação de conta com o formulário
     return render_template("criarconta.html", form=formcriarconta)
 
 # Cria a rota para a página de perfil do usuário
-@app.route("/perfil/<usuario>")
+@app.route("/perfil/<id_usuario>")
 @login_required  # Só permite acesso se o usuário estiver logado
-def perfil(usuario):
-    # Renderiza o template de perfil com o nome do usuário
-    return render_template("perfil.html", usuario=usuario)
+def perfil(id_usuario):
+    if int(id_usuario) ==  int(current_user.id):
+        #o usuario ta vendo o perfil dele
+        return render_template("perfil.html", usuario=current_user)
+    else:
+        usuario = Usuario.query.get(int(id_usuario))
+        # Renderiza o template de perfil com o nome do usuário
+        return render_template("perfil.html", usuario=usuario)
 
 # Cria a rota para a página de logout
 @app.route("/logout")

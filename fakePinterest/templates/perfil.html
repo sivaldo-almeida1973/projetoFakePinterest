@@ -8,14 +8,18 @@
 
 {% block body %}
    <body>
-        <h1>Perfil do usuario: {{ usuario }} </h1>
+        <h1>Perfil do usuario: {{ usuario.username }} </h1>
         <!-- Cabeçalho principal que exibe o nome do usuário -->
-
+    
         <p>Usuario........</p>
         <!-- Parágrafo com uma descrição do usuário -->
-
+    
          <a href=" {{ url_for('logout') }}">Sair</a>
          <!-- Link para a função de logout -->
+
+         {% for foto in usuario.fotos %}
+            <img src="">
+         {% endfor %}
    </body>
 {% endblock %}
 <!-- Fim do bloco de corpo -->
