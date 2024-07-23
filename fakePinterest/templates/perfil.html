@@ -11,7 +11,7 @@
 
       <h1>Perfil do usuario: {{ usuario.username }} </h1>
     <!-- Cabeçalho principal que exibe o nome do usuário -->
-
+        {% if form %}
         <!-- Início do formulário -->
         <form method="POST" enctype="multipart/form-data">
             <!-- Token CSRF para segurança -->
@@ -22,13 +22,10 @@
             {{ form.botao_confirmacao }}
         </form>
         <!-- Fim do formulário -->
-
-
-        <!-- Parágrafo com uma descrição do usuário -->
+         {% endif %}
 
          <a href=" {{ url_for('logout') }}">Sair</a>
          <!-- Link para a função de logout -->
-
 
          {% for foto in usuario.fotos %}
               <img src="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem)) }}">
