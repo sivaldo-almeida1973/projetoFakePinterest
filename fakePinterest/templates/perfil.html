@@ -8,17 +8,30 @@
 
 {% block body %}
    <body>
-        <h1>Perfil do usuario: {{ usuario.username }} </h1>
-        <!-- Cabeçalho principal que exibe o nome do usuário -->
-    
-        <p>Usuario........</p>
+
+      <h1>Perfil do usuario: {{ usuario.username }} </h1>
+    <!-- Cabeçalho principal que exibe o nome do usuário -->
+
+        <!-- Início do formulário -->
+        <form method="POST" enctype="multipart/form-data">
+            <!-- Token CSRF para segurança -->
+            {{ form.csrf_token }}
+            <!-- Campo para upload de foto -->
+            {{ form.foto() }}
+            <!-- Botão de confirmação -->
+            {{ form.botao_confirmacao }}
+        </form>
+        <!-- Fim do formulário -->
+
+
         <!-- Parágrafo com uma descrição do usuário -->
-    
+
          <a href=" {{ url_for('logout') }}">Sair</a>
          <!-- Link para a função de logout -->
-        <img src="{{ url_for('static', filename='fotos_posts/png-transparefotoDefautl.png') }}">
-         {% for foto in usuario.fotos %}
 
+
+         {% for foto in usuario.fotos %}
+              <img src="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem)) }}">
          {% endfor %}
 
    </body>

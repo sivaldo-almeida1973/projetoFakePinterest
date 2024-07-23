@@ -7,7 +7,11 @@ from fakePinterest.models import Usuario, Foto
 # Importa funções de login do Flask-Login
 from flask_login import login_required, login_user, logout_user, current_user
 # Importa os formulários de login e criação de conta
-from fakePinterest.forms import FormLogin, FormCriarConta
+from fakePinterest.forms import FormLogin, FormCriarConta, FormFoto
+import os
+from werkzeug.utils import secure_filename
+
+
 
 # Cria a rota para a página inicial (homepage)
 @app.route("/", methods=["GET", "POST"])
@@ -52,16 +56,29 @@ def criarconta():
     return render_template("criarconta.html", form=formcriarconta)
 
 # Cria a rota para a página de perfil do usuário
-@app.route("/perfil/<id_usuario>")
+@app.route("/perfil/<id_usuario>", methods=["GET" ,"POST"])
 @login_required  # Só permite acesso se o usuário estiver logado
 def perfil(id_usuario):
     if int(id_usuario) ==  int(current_user.id):
         #o usuario ta vendo o perfil dele
-        return render_template("perfil.html", usuario=current_user)
+        form_foto = FormFoto()
+        #criar funcionalidade enviar
+        if form_foto.validate_on_submit():
+            arquivo = form_foto.foto.data
+            nome_seguro = secure_filename(arquivo.filename)
+            #salvar o arquivo na pasta foto_posts
+            caminho = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                              app.config["UPLOAD_FOLDER"], nome_seguro)
+            arquivo.save(caminho)
+            #registrar esse arquivo no banco de dados
+            foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
+            database.session.add(foto)
+            database.session.commit()
+        return render_template("perfil.html", usuario=current_user, form=form_foto)
     else:
         usuario = Usuario.query.get(int(id_usuario))
         # Renderiza o template de perfil com o nome do usuário
-        return render_template("perfil.html", usuario=usuario)
+        return render_template("perfil.html", usuario=usuario, form=None)
 
 # Cria a rota para a página de logout
 @app.route("/logout")

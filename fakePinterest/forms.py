@@ -1,7 +1,7 @@
 # Importa a classe FlaskForm do Flask-WTF para criar formulários
 from flask_wtf import FlaskForm
 # Importa os campos de formulário do WTForms
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, FileField
 # Importa os validadores do WTForms
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 # Importa o modelo Usuario do módulo fakePinterest
@@ -36,3 +36,10 @@ class FormCriarConta(FlaskForm):
         # Se o usuário já existe, lança um erro de validação
         if usuario:
             raise ValidationError("E-mail já cadastrado, faça login para continuar.")
+
+#formulario de enviar foto---(FileField) ,
+# para esse formulario ser usado , tem que ser
+# importado la no routes_views.py/perfil
+class FormFoto(FlaskForm):
+    foto = FileField("Foto", validators=[DataRequired()])
+    botao_confirmacao = SubmitField("Enviar")
