@@ -3,5 +3,5 @@ from fakePinterest import app
 
 #se for importado de outro arquivo, não é para rodar esse codigo
 if __name__ == "__main__":
-    app.run(debug=True)#qualquer alteração feita , atualiza auto
+    app.run(debug=False)#qualquer alteração feita , atualiza auto
 
