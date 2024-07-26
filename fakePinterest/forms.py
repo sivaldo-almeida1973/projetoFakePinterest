@@ -16,6 +16,15 @@ class FormLogin(FlaskForm):
     # Botão de submissão do formulário
     botao_confirmacao = SubmitField("Fazer Login")
 
+      # Método para validar se o e-mail já está cadastrado
+    def validate_email(self, email):
+        # Busca um usuário no banco de dados com o e-mail fornecido
+        usuario = Usuario.query.filter_by(email=email.data).first()
+        # Se o usuário já existe, lança um erro de validação
+        if not usuario:
+            raise ValidationError("Usuário inexistente, crie uma conta!")
+
+
 # Define a classe FormCriarConta que herda de FlaskForm
 class FormCriarConta(FlaskForm):
     # Campo de e-mail com validadores de presença e formato de e-mail

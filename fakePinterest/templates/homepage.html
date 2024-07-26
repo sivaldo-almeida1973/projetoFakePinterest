@@ -78,6 +78,11 @@
             <div class="div-input">
 
             {{ form.email.label(class="label") }}
+                  {% if form.email.errors %}
+              {% for erro in form.email.errors %}
+               <p style="color: red"> {{ erro }}</p>
+              {% endfor %}
+            {% endif %}
             {{ form.email( class="input") }}
             <!-- Campo de entrada para o email com seu rótulo -->
           </div>
@@ -85,6 +90,11 @@
           <div class="div-input">
 
             {{ form.senha.label(class="label") }}
+                {% if form.senha.errors %}
+              {% for erro in form.senha.errors %}
+               <p style="color: red"> {{ erro }}</p>
+              {% endfor %}
+            {% endif %}
             {{ form.senha( class="input") }}
             <!-- Campo de entrada para a senha com seu rótulo -->
           </div>
