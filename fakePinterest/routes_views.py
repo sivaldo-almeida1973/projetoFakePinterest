@@ -23,7 +23,7 @@ def homepage():
         # Busca o usuário no banco de dados pelo email
         usuario = Usuario.query.filter_by(email=formlogin.email.data).first()
         # Verifica se o usuário existe e se a senha está correta
-        if usuario and bcrypt.check_password_hash(usuario.senha, formlogin.senha.data):
+        if usuario and bcrypt.check_password_hash(usuario.senha.encode("utf-8"), formlogin.senha.data):
             # Faz o login do usuário
             login_user(usuario)
             # Redireciona para a página de perfil do usuário
@@ -39,7 +39,7 @@ def criarconta():
     # Verifica se o formulário foi submetido e é válido
     if formcriarconta.validate_on_submit():
         # Criptografa a senha fornecida pelo usuário
-        senha = bcrypt.generate_password_hash(formcriarconta.senha.data)
+        senha = bcrypt.generate_password_hash(formcriarconta.senha.data).decode("utf-8")
         # Cria um novo usuário com os dados fornecidos
         usuario = Usuario(username=formcriarconta.username.data,
                           senha=senha,
