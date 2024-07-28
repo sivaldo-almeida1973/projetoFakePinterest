@@ -56,7 +56,7 @@ def criarconta():
     return render_template("criarconta.html", form=formcriarconta)
 
 # Cria a rota para a página de perfil do usuário
-@app.route("/perfil/<id_usuario>", methods=["GET" ,"POST"])
+@app.route("/perfil/<id_usuario>", methods=["GET", "POST"])
 @login_required  # Só permite acesso se o usuário estiver logado
 def perfil(id_usuario):
     if int(id_usuario) ==  int(current_user.id):
