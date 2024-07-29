@@ -1,5 +1,5 @@
 # Importa as funções necessárias do Flask
-from flask import render_template, url_for, redirect, send_from_directory
+from flask import render_template, url_for, redirect
 # Importa o app, o banco de dados e o bcrypt do módulo fakePinterest
 from fakePinterest import app, database, bcrypt
 # Importa os modelos de dados Usuario e Foto
@@ -55,12 +55,6 @@ def criarconta():
     # Renderiza o template de criação de conta com o formulário
     return render_template("criarconta.html", form=formcriarconta)
 
-
-@app.route("/uploads/<path:filename>")
-def custon_static(filename):
-    return send_from_directory(app.config["UPLOAD_FOLDER"], filename, as_attachment=True)
-
-
 # Cria a rota para a página de perfil do usuário
 @app.route("/perfil/<id_usuario>", methods=["GET", "POST"])
 @login_required  # Só permite acesso se o usuário estiver logado
@@ -73,7 +67,8 @@ def perfil(id_usuario):
             arquivo = form_foto.foto.data
             nome_seguro = secure_filename(arquivo.filename)
             #salvar o arquivo na pasta foto_posts
-            caminho = os.path.join(app.config["UPLOAD_FOLDER"], nome_seguro)
+            caminho = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                              app.config["UPLOAD_FOLDER"], nome_seguro)
             arquivo.save(caminho)
             #registrar esse arquivo no banco de dados
             foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
