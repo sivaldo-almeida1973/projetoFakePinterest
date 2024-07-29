@@ -43,7 +43,7 @@
  <div class="conteudo">
   {% for foto in usuario.fotos %}
     <div class="bloco-imagem">
-      <img src="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem)) }}">
+      <img src="{{ url_for('custon_static', filename='{}'.format(foto.imagem)) }}">
     </div>
 
  {% endfor %}  <!-- Fim do for -->

@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comunidade.db"
 app.config["SECRET_KEY"] = "3875e5c03b0edef84df63b5844d81ce9"
-app.config["UPLOAD_FOLDER"] = "static/fotos_posts"
+app.config["UPLOAD_FOLDER"] = "/fotos_posts"
 
 
 #cria nosso banco dados
